@@ -1,0 +1,11 @@
+img = imread('DJI_0027.png');
+imgsize = size(img);
+noise = uint8(randn(imgsize) * 50);
+img_noise = img + noise;
+subplot(1, 2, 1);
+imshow(img);
+title('Original Image');
+subplot(1, 2, 2);
+imshow(img_noise);
+title('Image with Gaussian Noise');
+imwrite(img_noise, 'image_with_noise.png');
