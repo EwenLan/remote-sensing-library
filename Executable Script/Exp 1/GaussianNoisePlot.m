@@ -1,0 +1,14 @@
+s = randn(1, 1200);
+x = -4:0.01:4;
+f = @(x) exp(-x.^2./2)./(sqrt(2*pi));
+y = f(x);
+histogram(s, 'Normalization', 'pdf');
+hold on;
+plot(x, y, 'LineWidth', 3, 'Color', 'r');
+title('Histogram of Gaussian White Noise');
+set(gca, 'FontSize', 22);
+xlabel('Amplitude');
+ylabel('Probality');
+figure;
+S = fftshift(fft(s));
+plot(abs(S));
