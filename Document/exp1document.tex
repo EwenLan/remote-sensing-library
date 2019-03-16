@@ -21,7 +21,25 @@
 \subsubsection{傅里叶变换}
 傅里叶变换是一种常用的信号分析方法。对于在时空上分布的二数字维图像$f(x, y)$，有傅里叶变换
 \[ F(u, v) = \sum_{n = 0}^{N - 1}\sum_{m = 0}^{M - 1}\mathrm{e}^{-\mathrm{j}(\omega_kn+\omega_lm)}f(n, m) \]
+对$M\times N$二维灰度图像
+\[\begin{pmatrix}
+x_{11} & x_{12} & \cdots & x_{1N} \\
+x_{21} & x_{22} & \cdots & x_{2N} \\
+\vdots & \vdots && \vdots \\
+x_{M1} & x_{M2} & \cdots & x_{MN}
+\end{pmatrix} \]
+进行傅里叶变换，可以得到与图像尺寸相同的$M\times N$复矩阵
+\[ \begin{pmatrix}
+|A_{11}|\mathrm{e}^{\mathrm{j}\theta_{11}} & |A_{12}|\mathrm{e}^{\mathrm{j}\theta_{12}} & \cdots & |A_{1N}|\mathrm{e}^{\mathrm{j}\theta_{1N}} \\
+|A_{21}|\mathrm{e}^{\mathrm{j}\theta_{21}} & |A_{22}|\mathrm{e}^{\mathrm{j}\theta_{22}} & \cdots & |A_{2N}|\mathrm{e}^{\mathrm{j}\theta_{2N}} \\
+\vdots & \vdots && \vdots \\
+|A_{M1}|\mathrm{e}^{\mathrm{j}\theta_{M1}} & |A_{M2}|\mathrm{e}^{\mathrm{j}\theta_{M2}} & \cdots & |A_{MN}|\mathrm{e}^{\mathrm{j}\theta_{MN}}
+\end{pmatrix} \]
+其中，靠近中心区域的元素是图片的低频信号幅度和相位，靠近边缘区域的元素是图片的高频信号幅度和相位。
 \subsubsection{低通滤波器}
+低通滤波器可以滤除高于截止频率的信号分量、保留低于截止频率的信号分量。
+
+对于二维灰度图像，可以设计低通滤波器。
 \subsection{实验流程}
 \subsection{实验程序}
 \subsection{实验结果和分析}
