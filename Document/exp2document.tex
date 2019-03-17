@@ -16,23 +16,147 @@
 \subsubsection{使用算术、逻辑操作进行增强}
 对两幅或多幅图像进行计算，进行求比值、求差值计算。可以实现从不同时期的遥感数据中分析出地表特征的变化。
 \subsection{实验流程}
-\begin{tikzpicture}[node distance=1.5cm]
+本次实验的实验流程如图\ref{fig:rsexp_flowchart}所示
+\begin{figure}[H]
+	\centering
+\begin{tikzpicture}[node distance=1.4cm]
 \node(start) [startstop] {开始};
-\node(input_img) [io, text width=2cm] {读取二维灰度图片};
-\node(power) [process] {进行幂次变换};
-\node(log) [process] {进行对数变换};
-\node(plot) [process] {绘制变换曲线};
-\node(output_img) [io, text width=2cm] {输出变换后的图片};
-\node(output_graph) [io, text width=2cm] {输出绘制的变换曲线};
-\node(input_rsimg) [io, text width=2cm] {读取具有差异的两幅遥感图像};
-\node(process_rsimg) [process] {选择合适的变换对遥感图像进行处理};
-\node(output_rsimg) [io, text width=2cm] {输出处理后的遥感图像};
-\node(end) [startstop] {结束};
+\node(input_img) [io, below of=start] {读取二维灰度图片};
+\node(power) [process, below of=input_img] {进行幂次变换};
+\node(log) [process, below of=power] {进行对数变换};
+\node(plot) [process, below of=log] {绘制变换曲线};
+\node(output_img) [io, below of=plot] {输出变换后的图片};
+\node(output_graph) [io, below of=output_img] {输出绘制的变换曲线};
+\node(input_rsimg) [io, below of=output_graph] {读取具有差异的两幅遥感图像};
+\node(process_rsimg) [process, below of=input_rsimg] {选择合适的变换对遥感图像进行处理};
+\node(output_rsimg) [io, below of=process_rsimg] {输出处理后的遥感图像};
+\node(end) [startstop, below of=output_rsimg] {结束};
 
 \draw[arrow] (start) -- (input_img);
 \draw[arrow] (input_img) -- (power);
 \draw[arrow] (power) -- (log);
-\draw[arrow] (log) -- ()
+\draw[arrow] (log) -- (plot);
+\draw[arrow] (plot) -- (output_img);
+\draw[arrow] (output_img) -- (output_graph);
+\draw[arrow] (output_graph) -- (input_rsimg);
+\draw[arrow] (input_rsimg) -- (process_rsimg);
+\draw[arrow] (process_rsimg) -- (output_rsimg);
+\draw[arrow] (output_rsimg) -- (end);
 \end{tikzpicture}
+\caption{图像变换实验流程图}
+\label{fig:rsexp_flowchart}
+\end{figure}
 \subsection{实验程序}
+\lstinputlisting[caption={反转变换程序代码}]{"../Executable Script/Exp 2/ReverseTransformAndCompare.m"}
+\lstinputlisting[caption={反转变换函数}]{"../Function Library/ReverseTransform.m"}
+\lstinputlisting[caption={反转变函数曲线绘制代码}]{"../Executable Script/Exp 2/PlotReverseTransformFunction.m"}
+\lstinputlisting[caption={幂次变换程序代码}]{"../Executable Script/Exp 2/GammaTransformAndCompare.m"}
+\lstinputlisting[caption={幂次变换函数}]{"../Function Library/GammaTransform.m"}
+\lstinputlisting[caption={幂次变换函数曲线绘制函数}]{"../Function Library/PlotGammaTransformFunction.m"}
+\lstinputlisting[caption={对数变换程序代码}]{"../Executable Script/Exp 2/LogTransformAndCompare.m"}
+\lstinputlisting[caption={对数变换函数}]{"../Function Library/LogTransform.m"}
+\lstinputlisting[caption={对数变换函数曲线绘制函数}]{"../Function Library/PlotLogTransformFunction.m"}
 \subsection{实验结果和分析}
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/DJI_0027_Gray.png}
+		\caption{原图片}
+		\label{fig:transform_original}
+	\end{minipage}
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/DJI_0027_Histogram}
+		\caption{原图片统计直方图}
+		\label{fig:dji0027histogram}
+	\end{minipage}
+\end{figure}
+\subsubsection{反转变换}
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/DJI_0027_Reversed.png}
+		\caption{$s=L-1-r$的反转变换}
+	\end{minipage}
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/DJI_0027_Reversed_Graph.eps}
+		\caption{$s=L-1-r$的反转变换曲线}
+	\end{minipage}
+\end{figure}
+\subsubsection{幂次变换}
+$b=1$的幂次变换
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/DJI_0027_Gamma_100.png}
+		\caption{$s=1r^1$的幂次变换}
+	\end{minipage}
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/DJI_0027_Gamma_100_Graph.eps}
+		\caption{$s=1r^1$的幂次变换曲线}
+	\end{minipage}
+\end{figure}
+
+$b=0.5$的幂次变换
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/DJI_0027_Gamma_50.png}
+		\caption{$s=1r^0.5$的幂次变换}
+	\end{minipage}
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/DJI_0027_Gamma_50_Graph.eps}
+		\caption{$s=1r^{0.5}$的幂次变换曲线}
+	\end{minipage}
+\end{figure}
+
+$b=2$的幂次变换
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/DJI_0027_Gamma_200.png}
+		\caption{$s=1r^2$的幂次变换}
+	\end{minipage}
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/DJI_0027_Gamma_200_Graph.eps}
+		\caption{$s=1r^2$的幂次变换曲线}
+	\end{minipage}
+\end{figure}
+\subsubsection{对数变换}
+$c=1$的对数变换
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/DJI_0027_Log_100.png}
+		\caption{$s=\log_2(1+1r)$的对数变换}
+	\end{minipage}
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/DJI_0027_Log_100_Graph.eps}
+		\caption{$s=\log_2(1+1r)$的对数变换曲线}
+	\end{minipage}
+\end{figure}
+
+$c=10$的对数变换
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/DJI_0027_Log_1000.png}
+		\caption{$s=\log_{11}(1+10r)$的对数变换}
+	\end{minipage}
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/DJI_0027_Log_1000_Graph.eps}
+		\caption{$s=\log_{11}(1+10r)$的对数变换曲线}
+	\end{minipage}
+\end{figure}
+
+$c=-0.9$的对数变换
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/DJI_0027_Log_-90.png}
+		\caption{$s=\log_{0.1}(1-0.9r)$的对数变换}
+	\end{minipage}
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/DJI_0027_Log_-90_Graph.eps}
+		\caption{$s=\log_{0.1}(1-0.9r)$的对数变换曲线}
+	\end{minipage}
+\end{figure}

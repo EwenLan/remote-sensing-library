@@ -1,4 +1,4 @@
-img = imread('san_1.bmp');
+img = imread('DJI_0027_Gray.png');
 args = [1, 0.5, 2];
 argc = [1, 1, 1];
 img1 = GammaTransform(img, argc(1), args(1));

@@ -14,7 +14,7 @@ function newimg = GammaTransform(img, c, b)
         newimg = uint8(tmpimg);
     else
         if imgsizesize == 3
-            parfor i = 1:imgsize(3)
+            for i = 1:imgsize(3)
                 newimg(:,:,i) = GammaTransform(img(:,:,i), c, b);
             end
         end
