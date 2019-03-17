@@ -1,0 +1,38 @@
+\subsection{实验目的}
+学习和实践图像翻转、对数变换、幂次变换等图像处理方法。学习使用算术、逻辑操作实现图像增强。
+\subsection{实验原理}
+\subsubsection{图像反转}
+对于二维灰度图像可以执行计算
+\[ s=L-1-r \]
+重新计算每一个像素点的像素值。这样计算之后得到的图像即为反转后的图像。图像反转会使得原本在图像中是明亮的区域变成黑暗的区域、黑暗的区域变成明亮的区域。
+\subsubsection{对数变换}
+对于二维灰度图像可以执行计算
+\[ s=c\log(1+r) \]
+重新计算每一点的像素值。这样的计算，可以提高图像在暗部或明部细节的辨识度。%例如，一个图像的能量主要集中在比较暗的部分，即在图像中暗部保存了许多细节，正常显示的时候会显得图像细节难以辨认。如果对这样的图像进行对数变换，那么就使得暗部的像素点的值得到提升，提高了图像在暗部的可辨识性。
+\subsubsection{幂次变换}
+对于二维的灰度图像可以执行计算
+\[ s=cr^b \]
+重新计算每一点的像素值。$c$和$b$为正常数，当$b$取不同值时将得到不同的变换曲线。
+\subsubsection{使用算术、逻辑操作进行增强}
+对两幅或多幅图像进行计算，进行求比值、求差值计算。可以实现从不同时期的遥感数据中分析出地表特征的变化。
+\subsection{实验流程}
+\begin{tikzpicture}[node distance=1.5cm]
+\node(start) [startstop] {开始};
+\node(input_img) [io, text width=2cm] {读取二维灰度图片};
+\node(power) [process] {进行幂次变换};
+\node(log) [process] {进行对数变换};
+\node(plot) [process] {绘制变换曲线};
+\node(output_img) [io, text width=2cm] {输出变换后的图片};
+\node(output_graph) [io, text width=2cm] {输出绘制的变换曲线};
+\node(input_rsimg) [io, text width=2cm] {读取具有差异的两幅遥感图像};
+\node(process_rsimg) [process] {选择合适的变换对遥感图像进行处理};
+\node(output_rsimg) [io, text width=2cm] {输出处理后的遥感图像};
+\node(end) [startstop] {结束};
+
+\draw[arrow] (start) -- (input_img);
+\draw[arrow] (input_img) -- (power);
+\draw[arrow] (power) -- (log);
+\draw[arrow] (log) -- ()
+\end{tikzpicture}
+\subsection{实验程序}
+\subsection{实验结果和分析}

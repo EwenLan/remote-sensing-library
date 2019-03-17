@@ -4,7 +4,7 @@ function newimg = image_mean_filter(img, mask_radius)
     tmp_img = 0;
     if imgsizesize == 2
         padding_size = imgsize + [2, 2]*(mask_radius - 1);
-        padding_img = zeros(padding_size);
+        padding_img = ones(padding_size)*255;
         padding_img(mask_radius:imgsize(1)+mask_radius-1, mask_radius:imgsize(2)+mask_radius-1) = img;
         tmp_img = uint8(zeros(imgsize));
         for i = 1:imgsize(1)
