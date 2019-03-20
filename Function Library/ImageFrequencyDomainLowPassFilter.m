@@ -1,4 +1,4 @@
-function newimg = frequency_domain_low_pass_filter(img, radius_scale)
+function newimg = ImageFrequencyDomainLowPassFilter(img, radius_scale)
     imgsize = size(img);
     imgsizesize = length(imgsize);
     full_circle_radius = norm(imgsize(1:2))/2;
