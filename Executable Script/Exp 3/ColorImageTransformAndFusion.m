@@ -1,4 +1,4 @@
-img = imread('DJI_0027.png');
+img = imread('DJI_0027_Compressed.png'.png');
 imgsize = size(img);
 newimg = zeros(imgsize, 'uint8');
 noise = randn(imgsize(1:2))*32;

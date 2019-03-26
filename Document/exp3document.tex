@@ -48,8 +48,45 @@
 	\begin{tikzpicture}[node distance=1.5cm]
 	\node(start) [startstop] {开始};
 	\node(inputimg) [io, below of=start] {读取图片};
+	\node(separateimg) [process, below of=inputimg] {分离彩色图像颜色通道};
+	\node(fusionchannels) [process, below of=separateimg] {加权合并各通道能量};
+	\node(outputenergyimg) [io, below of=fusionchannels] {输出能量合成图像};
+	\node(channelcompare) [process, below of=outputenergyimg] {使用图片的两个不同通道进行对比};
+	\node(outputchannelcomparation) [io, below of=channelcompare] {输出比较的结果};
+	\node(channeltransform) [process, below of=outputchannelcomparation] {对各个通道分别进行变换};
+	\node(outputtransformed) [io, below of=channeltransform] {输出变换后的图像};
+	\node(inputmask) [io, below of=outputtransformed] {输入兴趣区域蒙版};
+	\node(interestedarea) [process, below of=inputmask] {合成兴趣区域图像};
+	\node(outputinterestedarea) [io, below of=interestedarea] {输出兴趣区域图像};
+	\node(end) [startstop, below of=outputinterestedarea] {结束};
 	
+	\draw[arrow] (start) -- (inputimg);
+	\draw[arrow] (inputimg) -- (separateimg);
+	\draw[arrow] (separateimg) -- (fusionchannels);
+	\draw[arrow] (fusionchannels) -- (outputenergyimg);
+	\draw[arrow] (outputenergyimg) -- (channelcompare);
+	\draw[arrow] (channelcompare) -- (outputchannelcomparation);
+	\draw[arrow] (outputchannelcomparation) -- (channeltransform);
+	\draw[arrow] (channeltransform) -- (outputtransformed);
+	\draw[arrow] (outputtransformed) -- (inputmask);
+	\draw[arrow] (inputmask) -- (interestedarea);
+	\draw[arrow] (interestedarea) -- (outputinterestedarea);
+	\draw[arrow] (outputinterestedarea) -- (end);
 	\end{tikzpicture}
 \end{figure}
 \subsection{实验程序}
+\lstinputlisting[caption={简单像素加权融合程序}]{"../Executable Script/Exp 3/ColorImageEnergyGraph.m"}
+
 \subsection{实验结果和分析}
+\begin{figure}[H]
+	\centering	
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/DJI_0027_Compressed.png}
+		\caption{原图片}
+	\end{minipage}
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/DJI_0027_Energy.png}
+		\caption{简单像素加权融合结果}
+	\end{minipage}
+
+\end{figure}

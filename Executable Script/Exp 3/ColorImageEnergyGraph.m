@@ -1,4 +1,4 @@
-img = imread('DJI_0027.png');
+img = imread('DJI_0027_Compressed.png'.png');
 power = [1, 2, 1];
 power = power/sum(power);
 imgsize = size(img);
@@ -7,3 +7,4 @@ for i = 1:imgsize(3)
     newimg = newimg + power(i)*img(:,:,i);
 end
 imshow(newimg);
+imwrite(newimg, '../../Document/figure/DJI_0027_Energy.png');
