@@ -1,5 +1,5 @@
-img = imread('DJI_0027_Compressed.png'.png');
-power = [1, 2, 1];
+img = imread('DJI_0027_Compressed.png');
+power = [1, 1, 1];
 power = power/sum(power);
 imgsize = size(img);
 newimg = zeros(imgsize(1:2), 'uint8');

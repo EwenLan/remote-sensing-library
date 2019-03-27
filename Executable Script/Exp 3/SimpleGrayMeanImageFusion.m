@@ -1,4 +1,4 @@
-img = imread('DJI_0027_Compressed.png'.png');
+img = imread('DJI_0027_Compressed.png');
 colormap = [1, 2];
 mask = colormap(double(rgb2gray(imread('mask.png')))/255 + 1);
 imgsize = size(img);

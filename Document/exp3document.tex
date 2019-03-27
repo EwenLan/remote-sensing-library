@@ -75,18 +75,71 @@
 	\end{tikzpicture}
 \end{figure}
 \subsection{实验程序}
-\lstinputlisting[caption={简单像素加权融合程序}]{"../Executable Script/Exp 3/ColorImageEnergyGraph.m"}
-
+\lstinputlisting[caption={生成彩色图像的能量图像程序}]{"../Executable Script/Exp 3/ColorImageEnergyGraph.m"}
+\lstinputlisting[caption={彩色图像的分解变换与合成程序}]{"../Executable Script/Exp 3/ColorImageTransformAndFusion.m"}
+\lstinputlisting[caption={生成彩色图像的通道差异程序}]{"../Executable Script/Exp 3/ColorImageChannelsDiffer.m"}
+\lstinputlisting[caption={$I_1=1-\min\left(\frac{\mu_1}{\mu_2},\frac{\mu_2}{\mu_1} \right) $差异图像生成函数}]{"../Function Library/ImageDiffer_Minus.m"}
+\lstinputlisting[caption={$I_1=\left|\log X_1-\log X_2 \right| $差异图像生成函数}]{"../Function Library/ImageDiffer_Log.m"}
+\lstinputlisting[caption={差异图像融合函数}]{"../Function Library/ImageDiffer.m"}
+\lstinputlisting[caption={在图中标记兴趣区域程序}]{"../Executable Script/Exp 3/MarkInterestArea.m"}
+\lstinputlisting[caption={图像加权融合函数}]{"../Function Library/SafetyConstantImageMultiply.m"}
 \subsection{实验结果和分析}
+\subsubsection{生成彩色图像的能量图像}
+对原图片的红色、绿色和蓝色通道按照1、1、1的权重进行加权融合并重新进行量化，即可得到融合了红绿蓝三通道能量的能量图像，如图\ref{fig:dji0027energy}所示。
 \begin{figure}[H]
 	\centering	
 	\begin{minipage}{0.45\linewidth}
 		\includegraphics[width=\linewidth]{figure/DJI_0027_Compressed.png}
 		\caption{原图片}
+		\label{fig:dji0027original}
 	\end{minipage}
 	\begin{minipage}{0.45\linewidth}
 		\includegraphics[width=\linewidth]{figure/DJI_0027_Energy.png}
-		\caption{简单像素加权融合结果}
+		\caption{彩色图像的能量图像}
+		\label{fig:dji0027energy}
 	\end{minipage}
-
 \end{figure}
+\subsubsection{彩色图像的分解变换与合成}
+对如图\ref{fig:dji0027original}所示的原图像进行红、绿、蓝通道进行分解，并且对红色分量增加高斯白噪声，对绿色分量进行$s=\log_{1.2}(1+0.2r)$的对数变换，对蓝色分量进行反转变换，可以得到如图\ref{fig:dji0027color_transform_fusion}所示的结果。
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{figure/DJI_0027_Transformed_Fusion.png}
+	\caption{彩色图像的分解变换与合成结果}
+	\label{fig:dji0027color_transform_fusion}
+\end{figure}
+\subsubsection{彩色图像两通道图像差异}
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/DJI_0027_Minus_Differ.png}
+		\caption{采用$I_1=1-\min\left(\frac{\mu_1}{\mu_2},\frac{\mu_2}{\mu_1} \right) $计算差异图像的结果}
+	\end{minipage}
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/DJI_0027_Log_Differ.png}
+		\caption{采用$I_1=\left|\log X_1-\log X_2 \right| $计算差异图像的结果}
+	\end{minipage}
+\end{figure}
+\subsubsection{差异图像的融合}
+对以上两幅差异图像进行融合，可以得到如图\ref{fig:dji0027differ}所示的融合的差异图像。
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{figure/DJI_0027_Differ.png}
+	\caption{差异图像的融合图像}
+	\label{fig:dji0027differ}
+\end{figure}
+\subsubsection{标记兴趣区域}
+假设我们对图片中的图书馆感兴趣，将图书馆设为兴趣区域，在对应的二值蒙版中将图书馆所在区域设置为“1”，其他部分设置为“0”。对图书馆所在的区域和其他区域进行不同的变换，再进行图像融合，即可突出图书馆在图片中的区域。
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/DJI_0027_Compressed_Mask.png}
+		\caption{用于标记兴趣区域的二值蒙版}
+	\end{minipage}
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/DJI_0027_Interest.png}
+		\caption{突出兴趣区域的图像}
+	\end{minipage}
+\end{figure}
+使用简单的灰度值平均或加权平均法融合的图像更符合人眼的直觉。简单的灰度值平均或加权平均法能够实现对不同区域和图像的明暗变化，能够更好地突出对不同区域亮度值的选择与区分。
+
+使用简单的灰度值平均或加权平均法融合的图像可以控制要突出显示的目标轮廓、位置和纹理特征，适合小局部的目标辨别。差异图像的融合能够迅速地对全图的差异进行处理，适合大范围、零碎、没有明确边界特征和位置特征的目标的判断与识别，适合用于统计分析。

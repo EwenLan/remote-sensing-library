@@ -2,7 +2,7 @@ function newimg = ImageDiffer_Minus(img1, img2)
     imgsize = size(img1);
     imgsizesize = length(imgsize);
     img2size = size(img2);
-    newimg = zeros(imgsize, 'uint8');
+    newimg = zeros(imgsize);
     if imgsize ~= img2size
         error('The size of two images must be equal.');
     end
@@ -12,7 +12,7 @@ function newimg = ImageDiffer_Minus(img1, img2)
         ratio = zeros([imgsize, 2]);
         ratio(:,:,1) = ratio1;
         ratio(:,:,2) = ratio2;
-        newimg = uint8((1 - min(ratio, [], 3))*255);
+        newimg = (1 - min(ratio, [], 3));
     else
         if imgsizesize == 3
             for i = 1:imgsize(3)
