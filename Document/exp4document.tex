@@ -25,8 +25,7 @@ k均值据类算法是一个迭代算法，迭代更新每一个类别的聚类�
 		\item  计算各个聚类中心的新向量值：$\mathbf{Z}_j(k+1)\quad j=1,2,\dots,K$
 		\[ \mathbf{Z}_j(k+1)=\frac{1}{N_j}\sum_{\mathbf{X}\in S_j(k)}\mathbf{X}\quad j=1,2,\dots,K \]
 		\item 如果$\mathbf{Z}_j(k+1)\neq\mathbf{Z}_j(k)\quad j=1,2,\dots,K$，则回到2，将模式样本逐个重新分类，重复迭代计算。
-		
-		如果$\mathbf{Z}_j(k+1)=\mathbf{Z}_j(k)\quad j=1,2,\dots,K$，算法收敛，计算完毕。
+		\item 如果$\mathbf{Z}_j(k+1)=\mathbf{Z}_j(k)\quad j=1,2,\dots,K$，算法收敛，计算完毕。
 	\end{enumerate} 
 \end{description}
 \subsection{实验流程}
@@ -35,9 +34,69 @@ k均值据类算法是一个迭代算法，迭代更新每一个类别的聚类�
 	\begin{tikzpicture}[node distance=1.5cm]
 	\node(start) [startstop] {开始};
 	\node(input_img) [io, below of=start] {输入待分类的图像};
-	\node(radom_center) [process, below of=input_img] {随机选取聚类中心};
+	\node(random_center) [process, below of=input_img] {随机选取聚类中心};
+	\node(calculate_distance) [process, below of=random_center] {计算所有像素到每一个聚类点的距离};
+	\node(classifing) [process, below of=calculate_distance] {根据距离对像素点归类};
+	\node(convergent) [decision, below of=classifing, yshift=-1.5cm] {算法是否收敛？};
+	\node(calculate_center) [process, right of=convergent, xshift=3cm] {重新计算聚类点的坐标};
+	\node(display) [io, below of=convergent, yshift=-1.5cm] {显示聚类结果};
+	\node(end) [startstop, below of=display] {结束};
+	
+	\draw[arrow] (start) -- (input_img);
+	\draw[arrow] (input_img) -- (random_center);
+	\draw[arrow] (random_center) -- (calculate_distance);
+	\draw[arrow] (calculate_distance) -- (classifing);
+	\draw[arrow] (classifing) -- (convergent);
+	\draw[arrow] (convergent) -- node[anchor=east] {是} (display);
+	\draw[arrow] (convergent) -- node[anchor=south] {否} (calculate_center);
+	\draw[arrow] (calculate_center) |- (calculate_distance);
+	\draw[arrow] (display) -- (end);
 	\end{tikzpicture}
 \end{figure}
 \subsection{实验程序}
 \lstinputlisting[caption={K均值聚类程序}]{"../Executable Script/Exp 4/ReadAirportImages.m"}
 \subsection{实验结果和分析}
+对如图\ref{fig:airport_44}所示的图片上的像素进行聚类。设置聚类数为$2$，初始聚类中心设置为随机数，可以得到如图\ref{fig:airport_44_class_1_logical}和图\ref{fig:airport_44_class_2_logical}所示的分类结果。
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{figure/airport_44.jpg}
+	\caption{飞机场原图}
+	\label{fig:airport_44}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.45\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{figure/airport_44_Class_01_Logical.png}
+		\caption{第一个分类的分类图}
+		\label{fig:airport_44_class_1_logical}
+	\end{minipage}
+	\begin{minipage}{0.45\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{figure/airport_44_Class_02_Logical.png}
+		\caption{第二个分类的分类图}
+		\label{fig:airport_44_class_2_logical}
+	\end{minipage}
+\end{figure}
+其中，逻辑分类图中的白色区域代表图片中这个区域的像素点属于这一个分类。如果将原图片中的分类结果提取，可以得到如图\ref{fig:airport_44_class_1_separated}和图\ref{fig:airport_44_class_2_separated}所示的结果。
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/airport_44_Class_01_Separated.png}
+		\caption{分类一在原图片上的内容}
+		\label{fig:airport_44_class_1_separated}
+	\end{minipage}
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/airport_44_Class_02_Separated.png}
+		\caption{分类二在原图片上的内容}
+		\label{fig:airport_44_class_2_separated}
+	\end{minipage}
+\end{figure}
+将k均值无监督分类过程进行统计分析，可以绘制如图\ref{fig:airport_44_animate}所示的图表。
+\begin{figure}[H]
+	\centering
+	\animategraphics
+	\includegraphics[width=0.7\linewidth]{figure/airport_44_Clustering_Animation.gif}
+	\caption{聚类点位置和分类过程}
+	\label{fig:airport_44_animate}
+\end{figure}
