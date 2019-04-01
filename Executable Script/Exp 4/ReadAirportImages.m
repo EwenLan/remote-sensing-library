@@ -50,11 +50,5 @@ for i = 1:kNum
     imwrite(simg, sprintf('../../Document/figure/airport_44_Class_%02d_Separated.png', i));
 end
 
-for i = 1:trainingTimes - 1
-    [A, map] = rgb2ind(gifFrame{i}, 256);
-    if i == 1
-        imwrite(A, map, '../../Document/figure/airport_44_Clustering_Animation.gif', 'gif', 'LoopCount', Inf, 'DelayTime', 0.2);
-    else
-        imwrite(A, map, '../../Document/figure/airport_44_Clustering_Animation.gif', 'gif', 'WriteMode', 'append', 'DelayTime', 0.2);
-    end
-end
+ExportGifAnimate(gifFrame, '../../Document/figure/airport_44_Clustering_Animation.gif');
+ExportLatexAnimate(gifFrame, '../../Document/figure/airport_44_Clustering_Latex_Animate/frame');

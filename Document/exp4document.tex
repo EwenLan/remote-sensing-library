@@ -92,11 +92,11 @@ k均值据类算法是一个迭代算法，迭代更新每一个类别的聚类�
 		\label{fig:airport_44_class_2_separated}
 	\end{minipage}
 \end{figure}
-将k均值无监督分类过程进行统计分析，可以绘制如图\ref{fig:airport_44_animate}所示的图表。
+将k均值无监督分类过程进行统计分析，可以绘制如图\ref{fig:airport_44_animate}所示的图表\footnote{动画演示。如果不能播放可以尝试更换pdf阅读器，例如：Adobe Acrobat Reader。}。
 \begin{figure}[H]
 	\centering
-	\animategraphics
-	\includegraphics[width=0.7\linewidth]{figure/airport_44_Clustering_Animation.gif}
-	\caption{聚类点位置和分类过程}
+	\animategraphics[autopause, autoresume, loop, autoplay, width=0.7\linewidth]{5}{figure/airport_44_Clustering_Latex_Animate/frame-}{0001}{0010}
+	\caption{聚类点位置和分类过程（动画）}
 	\label{fig:airport_44_animate}
 \end{figure}
+可以看到，在训练过程中，各像素点的分类会逐步收敛，最终达到稳定，形成最佳的分类结果。
