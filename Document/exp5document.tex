@@ -1,0 +1,59 @@
+\subsection{实验目的}
+\subsection{实验原理}
+\begin{description}
+	\item[监督分类的概念] 首先使用训练样本学习一个分类器，再对测试样本进行分类。
+	\item[图像分类的两个步骤] 特征提取与分类算法。
+	\item[特征提取] 颜色特征向量。
+	\item[分类-训练过程] 使用训练样本学习分类器。
+	\item[分类-测试过程] 使用学习好的分类器对测试样本分类。
+\end{description}
+\subsubsection{线性判别函数的定义}
+直接用来对模式进行分类的准则函数。
+
+若分属于$\omega_1$，$\omega_2$的两类模式可用一方程$d(\mathbf{X})=0$来划分，那么称$d(\mathbf{X})$为判别函数，或称判决函数、决策函数。
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{figure/exp5classification}
+	\caption{二类二维样本的分布}
+	\label{fig:exp5classification}
+\end{figure}
+\begin{quote}
+	\kaishu 例：一个二维的两类判别问题，模式分布如图所示，这些分属于$\omega_1$，$\omega_2$两类的模式可用一直线方程$d(\mathbf{X})=0$来划分。
+	\[ d(\mathbf{X})=w_1x_1+w_2x_2+w_3=0 \]
+	式中：$x_1$，$x_2$为坐标变量，$w_1$，$w_2$，$w_3$为方程参数。
+\end{quote}
+\subsubsection{多类情况}
+\begin{description}
+	\item[$\omega_i/\bar{\omega_i}$两分法] 用线性判别函数将属于$\omega_i$类的模式与其余不属于$\omega_i$类的模式分开。
+\end{description}
+\[ d_i(\mathbf{X})=\mathbf{W}_i^\mathsf{T}\mathbf{X}\begin{cases}
+>0,\quad& \mathbf{X}\in\omega_i \\
+<0,\quad& \mathbf{X}\in\bar{\omega_i}
+\end{cases} \quad i=1,2,\dots,M \]
+识别分类时：将某个待分类模式$\mathbf{X}$分别带入$M$个类的$d(\mathbf{X})$中，若只有$d(\mathbf{X})>0$，其他$d(\mathbf{X})$均$<0$，则判为$\omega_1$类。
+
+对样本进行规范化处理，即$\omega_2$类样本全部诚意$(-1)$，则有
+\[ d(\mathbf{X})=\mathbf{W}^\mathsf{T}\mathbf{X}>0 \]
+感知器算法通过对已知类别的训练样本集的学习，寻找一个满足上式的权向量。
+
+感知机算法步骤：
+\begin{enumerate}
+	\item 选择$N$个分属于$\omega_1$和$\omega_2$类的模式样本构成训练样本集
+	\[ \left\lbrace \mathbf{X}_1,\mathbf{X}_2,\dots,\mathbf{X}_N \right\rbrace \]
+	构成增广向量形式，并进行行规范化处理。任取权向量初始值$\mathbf{W}(1)$，开始迭代，迭代次数$k=1$。
+	\item 用全部训练样本进行一轮迭代，计算$\mathbf{W}^\mathsf{T}(k)\mathbf{X}_i$的值，并修正权向量。分两种情况更新权向量的值：
+	\begin{enumerate}
+		\item 若$\mathbf{W}^\mathsf{T}(k)\mathbf{X}_i\leq 0$，分类器对第$i$个模式做了错误的分类。权向量矫正为：$\mathbf{W}(k+1)=\mathbf{W}(k)+c\mathbf{X}_i$（$c$：正的矫正增量）。
+		\item 若$\mathbf{W}^\mathsf{T}(k)\mathbf{X}_i> 0$，分类正确，权向量不变
+		\[ \mathbf{W}(k+1)=\mathbf{W}(k) \]
+	\end{enumerate}
+	统一写为
+	\[ \mathbf{W}(k+1)=\begin{cases}
+	\mathbf{W}(k),\quad & \text{若}\mathbf{W}^\mathsf{T}(k)\mathbf{X}_i > 0 \\
+	\mathbf{W}(k)+c\mathbf{X}_i, \quad & \text{若}\mathbf{W}^\mathsf{T}(k)\mathbf{X}_i \leq 0
+	\end{cases} \]
+	\item 分析分类结果：只要有一个错误分类，回到$2$，直至对所有样本正确分类。
+\end{enumerate}
+\subsection{实验流程}
+\subsection{实验程序}
+\subsection{实验结果和分析}
