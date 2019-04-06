@@ -55,6 +55,9 @@ k均值据类算法是一个迭代算法，迭代更新每一个类别的聚类�
 \end{figure}
 \subsection{实验程序}
 \lstinputlisting[caption={K均值聚类程序}]{"../Executable Script/Exp 4/ReadAirportImages.m"}
+\lstinputlisting[caption={绘制K均值聚类统计图表函数}]{"../Function Library/kMeansClusteringPlot.m"}
+\lstinputlisting[caption={导出\LaTeX 动态图片函数}]{"../Function Library/ExportLatexAnimate.m"}
+\lstinputlisting[caption={导出GIF动图函数}]{"../Function Library/ExportGifAnimate.m"}
 \subsection{实验结果和分析}
 对如图\ref{fig:airport_44}所示的图片上的像素进行聚类。设置聚类数为$2$，初始聚类中心设置为随机数，可以得到如图\ref{fig:airport_44_class_1_logical}和图\ref{fig:airport_44_class_2_logical}所示的分类结果。
 \begin{figure}[H]
@@ -95,7 +98,7 @@ k均值据类算法是一个迭代算法，迭代更新每一个类别的聚类�
 将k均值无监督分类过程进行统计分析，可以绘制如图\ref{fig:airport_44_animate}所示的图表\footnote{动画演示。如果不能播放可以尝试更换pdf阅读器，例如：Adobe Acrobat Reader。}。
 \begin{figure}[H]
 	\centering
-	\animategraphics[autopause, autoresume, loop, autoplay, width=0.7\linewidth]{5}{figure/airport_44_Clustering_Latex_Animate/frame-}{0001}{0010}
+	\animategraphics[autopause, autoresume, loop, autoplay, width=0.7\linewidth]{5}{figure/airport_44_Clustering_Latex_Animate/frame-}{0001}{0012}
 	\caption{聚类点位置和分类过程（动画）}
 	\label{fig:airport_44_animate}
 \end{figure}

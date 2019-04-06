@@ -51,4 +51,4 @@ for i = 1:kNum
 end
 
 ExportGifAnimate(gifFrame, '../../Document/figure/airport_44_Clustering_Animation.gif');
-ExportLatexAnimate(gifFrame, '../../Document/figure/airport_44_Clustering_Latex_Animate/frame');
+ExportLatexAnimate(gifFrame, '../../Document/figure/airport_44_Clustering_Latex_Animate');
