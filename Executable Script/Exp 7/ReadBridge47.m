@@ -7,3 +7,4 @@ subplot(1, 2, 1);
 imshow(detectedImg);
 subplot(1, 2, 2);
 imshow(img);
+imwrite(detectedImg, '../../Image Library/bridge_47_detection.png');
