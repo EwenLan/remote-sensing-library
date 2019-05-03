@@ -1,7 +1,8 @@
-function w = LDAClassification(positiveSamplesCell, negativeSamplesCell, dims)
+function w = LDAClassification(positiveSamplesCell, negativeSamplesCell)
     alpha = 2e-4;
     maxTrainingTimes = 1e5;
     classNum = length(positiveSamplesCell);
+    dims = size(positiveSamplesCell{1}, 2) - 1;
     w = [randn(dims, classNum); zeros(1, classNum)];
     for i = 1:maxTrainingTimes
         for j = 1:classNum
