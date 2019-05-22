@@ -1,8 +1,8 @@
-function binarizedImage = WindowDetectionV2(img, alertWindowRadius, paddingSize, normalDistributionThreshold)
+function binarizedImage = WindowDetectionHSV(img, alertWindowRadius, paddingSize, normalDistributionThreshold)
     iif = @(c, x, y) c * x + (1 - c) * y;
     imgsize = size(img);
     binarizedImage = zeros(imgsize(1), imgsize(2), 'uint8');
-    img = double(img) / 255;
+    img = rgb2hsv(double(img) / 255);
     imgsizesize = length(imgsize);
     if imgsizesize == 3
         for i = 1:imgsize(1)

@@ -1,0 +1,38 @@
+\subsection{实验目的}
+理解遥感图像目标检测的概念，根据之前所完成的实验以及所学习的算法自主设计目标检测方法，完成遥感图像的目标检测。
+\subsection{实验原理}
+\subsubsection{目标检测的概念}
+从大场景的遥感图像中检测出感兴趣的目标。例如舰船目标，车辆目标等。给出目标的位置信息，并在原始图像中标注出来检测出的目标，提供目标的切片图像，用于后续的目标识别。
+\subsubsection{目标检测的一般流程}
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[node distance=4cm]
+	\node[process](original_rs_img){原始遥感图像};
+	\node[process, right of=original_rs_img](binary_detection){二值检测结果图像};
+	\node[process, right of=binary_detection](abstract_optional_objs){候选目标提取};
+	\node[process,right of=abstract_optional_objs](remove_false_alert){虚警去除};
+	
+	\draw[->] (original_rs_img) -- (binary_detection);
+	\draw[->] (binary_detection) -- (abstract_optional_objs);
+	\draw[->] (abstract_optional_objs) -- (remove_false_alert);
+	\end{tikzpicture}
+\end{figure}
+\subsubsection{二值检测结果}
+通过设计目标检测算法，从原始的遥感图像得到一个输出图像，该图像与原始图像具有相同的大小，但是为一幅二值图像，其中值为1的点代表目标像素点，值为0的点代表非目标像素点。
+\begin{description}
+	\item[目标检测的本质] 寻找目标与周围背景的差异性，根据这个差异性寻找目标。
+	\item[一种可能的思路] 判断每一个像素点与它周围的背景像素点的差异性，如果差异性足够大，则该像素点判定为属于目标。
+\end{description}
+\subsubsection{目标检测的滑窗模型}
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+	\filldraw[fill=blue!10] (0, 0) rectangle ++(5, 5) node[right] {背景窗};
+	\filldraw[fill=yellow] (.5, .5) rectangle ++(4, 4) node[pos=0.8] {警戒窗};
+	\filldraw[fill=lightgray] (2.25, 1.75) rectangle ++(2, 1) node[pos=0.8]{目标大小};
+	\filldraw[fill=red] (2.25, 2.25) rectangle ++(.5, .5) node[pos=0.8, above]{当前检测的像素点};
+	\end{tikzpicture}
+\end{figure}
+\subsection{实验流程}
+\subsection{实验程序}
+\subsection{实验结果和分析}
