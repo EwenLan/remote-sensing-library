@@ -34,5 +34,31 @@
 	\end{tikzpicture}
 \end{figure}
 \subsection{实验流程}
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[node distance=1.5cm]
+	\node[startstop](begin){开始};
+	\node[io, below of=begin](read_img){读取待检测图片};
+	\node[process, below of=read_img](loop_detection){循环滑窗检测};
+	\node[process, below of=loop_detection](calculate_mean){计算背景窗像素点RGB均值};
+	\node[process, below of=calculate_mean](calculate_std){计算背景窗像素点RGB方差};
+	\node[decision,below of=calculate_std, node distance=5cm](judge_obj){判断检测像素点RGB值是否在$N\sigma$内};
+	\node[process, below of=judge_obj, node distance=5cm](is_obj){在二值图上标记这个点};
+	\node[process, right of=is_obj, node distance=5cm](not_obj){不做任何处理};
+	\node[io, below of=is_obj](output_result){输出二值图};
+	\node[startstop, below of=output_result](end){结束};
+	
+	\draw[->] (begin) -- (read_img);
+	\draw[->] (read_img) -- (loop_detection);
+	\draw[->] (loop_detection) -- (calculate_mean);
+	\draw[->] (calculate_mean) -- (calculate_std);
+	\draw[->] (calculate_std) -- (judge_obj);
+	\draw[->] (judge_obj) -- (is_obj) node[pos=0.5, right] {是};
+	\draw[->] (is_obj) -- (output_result);
+	\draw[->] (output_result) -- (end);
+	\draw[->] (judge_obj) -| (not_obj) node[pos=0.5, right] {否};
+	\draw[->] (not_obj) |- (output_result);
+	\end{tikzpicture}
+\end{figure}
 \subsection{实验程序}
 \subsection{实验结果和分析}

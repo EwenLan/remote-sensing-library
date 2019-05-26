@@ -3,23 +3,24 @@ B = 100e6; % 100MHz
 c = 3e8;   % Light Speed 3x10^8 m/s
 alpha = 1.2;
 timeRange = 0.002;
-delay = 0.001;
+delay = 0.0015;
 fs = 2*B*alpha;
 gamma = B/Tp;
 t = -Tp/2:1/fs:Tp/2;
 s = exp(1i*pi*gamma*t.^2);
 y = zeros(1, timeRange*fs);
+pulseCompressionLength = length(t) + length(y) - 1;
 y((delay - Tp/2)*fs:(delay + Tp/2)*fs) = s;
-ty = (1:length(y))/fs;
-Y = fftshift(fft(y))/length(y);
-fY = linspace(-fs/2, fs/2, length(ty));
+ty = (1:pulseCompressionLength)/fs;
+Y = fftshift(fft(y, pulseCompressionLength))/pulseCompressionLength;
+fY = linspace(-fs/2, fs/2, pulseCompressionLength);
 figure;
-plot(ty, abs(y));
+plot(abs(y));
 xlabel('Time(s)');
 ylabel('Amplitude');
 title('Echo Signal in Time Domain(Amplitude-Time)');
 figure;
-plot(ty, angle(y));
+plot(angle(y));
 xlabel('Time(s)');
 ylabel('Phase(rad)');
 title('Echo Signal in Time Domain(Phase-Time)');
@@ -35,8 +36,9 @@ ylabel('Phase(rad)');
 title('Echo Signal in Frequency Domain(Phase-Frequency)');
 %% Time domain signal =Flip=Conjugate=DFT=> System Function
 %  Pulse Compression in frequency domain
-H = fftshift(fft(ifftshift(conj(flip(s))), length(y))/length(y));
-fH = linspace(-fs/2, fs/2, length(y));
+% H = fftshift(fft(conj(ifftshift(flip(s))), length(y))/length(y));
+H = conj(fftshift(fft(ifftshift(s), pulseCompressionLength)));
+fH = linspace(-fs/2, fs/2, pulseCompressionLength);
 figure;
 plot(fH, abs(H));
 xlabel('Frequency(Hz)');
