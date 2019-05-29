@@ -14,3 +14,8 @@ end
 imgWithRectangle = DrawRectangle(img, pickedRectangle(:, :));
 imshow(imgWithRectangle);
 imwrite(imgWithRectangle, '../../Document/figure/bridge_50_marked_ship.png');
+objImgs = CutObjectsFromImage(img, pickedRectangle);
+pickedObjNum = length(objImgs);
+for i = 1:pickedObjNum
+    imwrite(objImgs{i}, sprintf('../../Document/figure/bridge_50_cutted_object_%d.png', i));
+end

@@ -7,7 +7,7 @@ function [objsInfo, labeledImg] = GetBinarizedImageObjectsInfo(binarizedImg)
     % |  9. Semi-Major Axis| 10. Semi-Minor Axis|
     for i = 1:objsNum
         objsInfo(i, 1) = i;
-        objsInfo(i, 2) = sum(labeledImg == i, 'all');
+        objsInfo(i, 2) = sum(sum(labeledImg == i));
         [objPtsX, objPtsY] = find(labeledImg == i);
         objPtsCoord = [objPtsX, objPtsY];
         objsInfo(i, 3:4) = mean(objPtsCoord, 1);

@@ -1,5 +1,84 @@
 \subsection{实验目的}
+理解遥感图像目标识别的概念，理解特征提取与分类的概念，学习主成分分析特征提取方法，以及K近邻分类方法，使用这两种方法完成目标识别。
 \subsection{实验原理}
+\subsubsection{目标识别的主要步骤}
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[node distance=4cm]
+	\node[process](rs_img){目标遥感图像};
+	\node[process, right of=rs_img](abstract){特征提取};
+	\node[process, right of=abstract](classifiler){分类器};
+	\node[process, right of=classifiler](result){分类结果};
+	
+	\draw[->] (rs_img) -- (abstract);
+	\draw[->] (abstract) -- (classifiler);
+	\draw[->] (classifiler) -- (result);
+	\end{tikzpicture}
+\end{figure}
+\subsubsection{特征提取}
+由原始的观测数据得到变换后的用于分类的特征。变换的主要目的：
+\begin{enumerate}
+	\item 降低维数
+	\item 提高类别可分性
+\end{enumerate}
+\[ \mathbf{Y}_m=\mathbf{A}_{m\times n}\mathbf{X}_n \]
+\subsubsection{主成分分析}
+\paragraph{最小重构误差准则}
+\begin{description}
+	\item[原始特征] $x_i\in \mathbb{R}^d,\quad i=1,2,\dots ,m$，均值为$0$。
+	\item[特征变换的目的] 寻找一组新的坐标系$\left\lbrace w_1, w_2,\dots, w_d \right\rbrace$其中每一个向量为标准正交基。
+	
+	如果丢弃新坐标系中的部分坐标，将维度降低到$d'<d$，则样本在新坐标系中的投影为$\mathbf{z}_i=\left[ z_{i1}, z_{i2},\dots, z_{id} \right]$，重构向量为$\hat{x}_i=\sum_{i=1}^{d}z_{ij}w_j$，我们的目的是：
+	$ \min\sum_{i=1}^{m}\left\| \hat{x}_i-x_i \right\|^2 $
+	\item[上述问题的解] 样本协方差矩阵的前$d'$个最大的特征值对应的特征向量就是$\left\lbrace w_1, w_2,\dots,w_d \right\rbrace$。
+	\item[计算过程]
+	\begin{enumerate}
+		\item 样本均值变为$0$。
+		\item 计算样本协方差矩阵。
+		\item 特征值分解，取最大特征值对应的特征向量。
+		\item 得到投影矩阵$\mathbf{W}=\left[ w_1, w_2,\dots, w_d \right]$。
+	\end{enumerate}
+	\item[最大可分性原则] 投影后的向量为：$\mathbf{W}^\mathsf{T}x_i$。使得投影后的向量的方差最大化，推导的结果与前面等价。
+	\item[$d'$的选择] $\frac{\sum_{i=1}^{d'}\lambda_i}{\sum_{i=1}^{d}\lambda_i}\leq l$
+\end{description}
+\paragraph{分类器}
+\begin{description}
+	\item[K近邻学习] 给定测试样本，基于某种距离度量找出训练样本集中与其最靠近的K个样本，基于K个近邻的信息来进行分类。可使用投票法完成分类，即K个近邻中出现最多的类别作为分类结果。
+	
+	$K=1$时，成为最近邻分类器。
+\end{description}
+\paragraph{分类结果评价}
+评价指标：分类准确率。
 \subsection{实验流程}
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[node distance=1.5cm]
+	\node[startstop](begin){开始};
+	\node[io, below of=begin](read_set){读取已标示的数据集};
+	\node[process, below of=read_set](cut_img){分割数据集中的图片};
+	\node[process, below of=cut_img](split_set){抽取训练样本和测试样本};
+	\node[process, below of=split_set](pca){对所有样本进行PCA得到降维矩阵};
+	\node[process, below of=pca](feature){对所有样本降维，得到特征向量};
+	\node[process, below of=feature](classifying){对测试样本进行K近邻分类};
+	\node[process, below of=classifying](accuracy){计算分类准确率};
+	\node[io, below of=accuracy](output){输出分类准确率};
+	\node[startstop, below of=output](end){结束};
+	
+	\draw[->] (begin) -- (read_set);
+	\draw[->] (read_set) -- (cut_img);
+	\draw[->] (cut_img) -- (split_set);
+	\draw[->] (split_set) -- (pca);
+	\draw[->] (pca) -- (feature);
+	\draw[->] (feature) -- (classifying);
+	\draw[->] (classifying) -- (accuracy);
+	\draw[->] (accuracy) -- (output);
+	\draw[->] (output) -- (end);
+	\end{tikzpicture}
+\end{figure}
 \subsection{实验程序}
+\lstinputlisting[caption={Images2Mat.m}]{"../Executable Script/Exp 9/Images2Mat.m"}
+\lstinputlisting[caption={SplitDataSet.m}]{"../Executable Script/Exp 9/SplitDataSet.m"}
+\lstinputlisting[caption={CalculatePCAMat.m}]{"../Executable Script/Exp 9/CalculatePCAMat.m"}
+\lstinputlisting[caption={TestClassifierPerformance.m}]{"../Executable Script/Exp 9/TestClassifierPerformence.m"}
+\lstinputlisting[caption={PrincipalComponentAnalysis.m}]{"../Function Library/PrincipalComponentAnalysis.m"}
 \subsection{实验结果和分析}

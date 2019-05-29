@@ -61,4 +61,43 @@
 	\end{tikzpicture}
 \end{figure}
 \subsection{实验程序}
+\lstinputlisting[caption={ReadBridge47.m}]{"../Executable Script/Exp 7/ReadBridge47.m"}
+\lstinputlisting[caption={ReadBridge48.m}]{"../Executable Script/Exp 7/ReadBridge48.m"}
+\lstinputlisting[caption={ReadBridge50.m}]{"../Executable Script/Exp 7/ReadBridge50.m"}
+\lstinputlisting[caption={WindowDetection.m}]{"../Function Library/WindowDetection.m"}
 \subsection{实验结果和分析}
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/bridge_47.jpg}
+		\caption{bridge\_47原图}
+	\end{minipage}
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/bridge_47_detection.png}
+		\caption{bridge\_47检测结果}
+	\end{minipage}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/bridge_48.jpg}
+		\caption{bridge\_48原图}
+	\end{minipage}
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/bridge_48_detection.png}
+		\caption{bridge\_48检测结果}
+	\end{minipage}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/bridge_50.jpg}
+		\caption{bridge\_50原图}
+	\end{minipage}
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/bridge_50_detection.png}
+		\caption{bridge\_50检测结果}
+	\end{minipage}
+\end{figure}
+
+如上图所示是对三幅图的检测结果，其中检测结果中的白色区域是程序判定为目标点的位置，黑色区域是程序判定为不是目标区域的部分。可以看到对于bridge\_47和bridge\_48的检测结果比较理想，其中对真实目标的检测结果比较清晰，虚警目标极少。对bridge\_50的判定结果较差，虚警目标较多，对真实目标的判定不够清晰，对同一目标的检测不能形成连通区域。

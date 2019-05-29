@@ -69,5 +69,83 @@
 	\item 跳至步骤2，重复计算及合并。结束准则：最小距离大于一个阈值$T$。
 \end{enumerate}
 \subsection{实验流程}
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[node distance=1.5cm]
+	\node[startstop](begin){开始};
+	\node[io, below of=begin](read_binarized_img){读取二值化判别图};
+	\node[process, below of=read_binarized_img](label){标记连通区域};
+	\node[process, below of=label](statistic){对连通区域计算质心、二阶矩};
+	\node[process, below of=statistic](covariance){计算连通区域坐标协方差矩阵};
+	\node[process, below of=covariance](area){计算连通区域面积};
+	\node[process, below of=area](filte){筛选符合要求的目标};
+	\node[process, below of=filte](mark_obj){在图片上标记目标};
+	\node[io, below of=mark_obj](output){输出目标图像};
+	\node[startstop, below of=output](end){结束};
+	
+	\draw[->] (begin) -- (read_binarized_img);
+	\draw[->] (read_binarized_img) -- (label);
+	\draw[->] (label) -- (statistic);
+	\draw[->] (statistic) -- (covariance);
+	\draw[->] (covariance) -- (area);
+	\draw[->] (area) -- (filte);
+	\draw[->] (filte) -- (mark_obj);
+	\draw[->] (mark_obj) -- (output);
+	\draw[->] (output) -- (end);
+	\end{tikzpicture}
+\end{figure}
 \subsection{实验程序}
+\lstinputlisting[caption={MarkBridge47.m}]{"../Executable Script/Exp 8/MarkBridge47.m"}
+\lstinputlisting[caption={MarkBridge48.m}]{"../Executable Script/Exp 8/MarkBridge48.m"}
+\lstinputlisting[caption={MarkBridge50.m}]{"../Executable Script/Exp 8/MarkBridge50.m"}
+\lstinputlisting[caption={GetBinarizedImageObjectsInfo.m}]{"../Function Library/GetBinarizedImageObjectsInfo.m"}
+\lstinputlisting[caption={DrawRectangle.m}]{"../Function Library/DrawRectangle.m"}
+\lstinputlisting[caption={CutObjectsFromImage.m}]{"../Function Library/CutObjectsFromImage.m"}
 \subsection{实验结果和分析}
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/bridge_47.jpg}
+		\caption{bridge\_47原图}
+	\end{minipage}
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/bridge_47_marked_ship.png}
+		\caption{bridge\_47检测结果}
+	\end{minipage}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/bridge_48.jpg}
+		\caption{bridge\_48原图}
+	\end{minipage}
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/bridge_48_marked_ship.png}
+		\caption{bridge\_48检测结果}
+	\end{minipage}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/bridge_50.jpg}
+		\caption{bridge\_50原图}
+	\end{minipage}
+	\begin{minipage}{0.45\linewidth}
+		\includegraphics[width=\linewidth]{figure/bridge_50_marked_ship.png}
+		\caption{bridge\_50检测结果}
+	\end{minipage}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.3\linewidth}
+		\includegraphics[width=\linewidth]{figure/bridge_47_cutted_object_1.png}
+	\end{minipage}
+	\begin{minipage}{0.3\linewidth}
+		\includegraphics[width=\linewidth]{figure/bridge_48_cutted_object_1.png}
+	\end{minipage}
+	\begin{minipage}{0.3\linewidth}
+		\includegraphics[width=\linewidth]{figure/bridge_50_cutted_object_1.png}
+	\end{minipage}
+	\caption{从图中截取的船只}
+\end{figure}
+对检测结果进行标记和筛选后，根据先验知识，我们可以设定筛选出船只的条件，比如面积、长宽比等特征。根据这些条件，我们可以从有许多虚警的图片中，筛选出最有可能是船只的目标。从上图可以看出，根据设定的筛选条件，程序成功的从图片中选出了图片中的船只。
