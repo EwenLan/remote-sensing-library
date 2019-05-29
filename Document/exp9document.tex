@@ -82,13 +82,20 @@
 \lstinputlisting[caption={TestClassifierPerformance.m}]{"../Executable Script/Exp 9/TestClassifierPerformence2.m"}
 \lstinputlisting[caption={PrincipalComponentAnalysis.m}]{"../Function Library/PrincipalComponentAnalysis.m"}
 \subsection{实验结果和分析}
-\begin{tabular}{l|rrrr}
+使用上述程序，对原始的$600\times 600\times3$的森林、商业区、海滩和沙漠图片进行分割，成为$60\times 60\times 3$的小图片进行分类测试。
+
+随机抽取不同类别的测试样本各1500个进行分类测试，可以得到如下表所示对分类结果。表中的每一行代表不同类别的测试样本，每一列代表不同类别的测试样本判断为这一分类的概率。所以，表中对角线上的概率即为这一分类的正确率。
+\begin{center}
+\begin{tabular}{ll|rrrr}
 	\toprule
-	 & 森林 & 商业区 & 海滩 & 沙漠 \\
+	&&\multicolumn{4}{c}{判定概率} \\
+	 & & 森林 & 商业区 & 海滩 & 沙漠 \\
 	 \midrule
-	 森林 & 91.93\% & 7.60\% & 0.33\% & 0.13\% \\
-	 商业区 & 12.00\% & 84.80\% & 2.73\% & 0.47\% \\
-	 海滩 & 1.07\% & 1.07\% & 96.40\% & 1.47\% \\
-	 沙漠 & 0.07\% & 1.07\% & 0.13\% & 98.73\% \\
+	 \multirow{4}{*}{源数据类别} & 森林 & 91.93\% & 7.60\% & 0.33\% & 0.13\% \\
+	  & 商业区 & 12.00\% & 84.80\% & 2.73\% & 0.47\% \\
+	  & 海滩 & 1.07\% & 1.07\% & 96.40\% & 1.47\% \\
+	  & 沙漠 & 0.07\% & 1.07\% & 0.13\% & 98.73\% \\
 	 \bottomrule
 \end{tabular}
+\end{center}
+由上表不难发现，从宏观上，使用主成分分析法和K近邻分类法对遥感图像进行分类可以取得比较优秀对分类结果，但仔细观察可以发现，对商业区的测试样本的分类还不太理想，对其他分类样本均有令人满意的分类结果。
