@@ -1,4 +1,4 @@
-dataSetNames = {'Forest', 'Commercial'};
+dataSetNames = {'Forest', 'Commercial', 'Beach', 'Desert'};
 cuttedImageSize = [60, 60, 3];
 cuttedRowNums = 10;
 cuttedColNums = 10;

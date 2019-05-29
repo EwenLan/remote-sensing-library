@@ -76,9 +76,19 @@
 	\end{tikzpicture}
 \end{figure}
 \subsection{实验程序}
-\lstinputlisting[caption={Images2Mat.m}]{"../Executable Script/Exp 9/Images2Mat.m"}
-\lstinputlisting[caption={SplitDataSet.m}]{"../Executable Script/Exp 9/SplitDataSet.m"}
-\lstinputlisting[caption={CalculatePCAMat.m}]{"../Executable Script/Exp 9/CalculatePCAMat.m"}
-\lstinputlisting[caption={TestClassifierPerformance.m}]{"../Executable Script/Exp 9/TestClassifierPerformence.m"}
+\lstinputlisting[caption={Images2Mat.m}]{"../Executable Script/Exp 9/Images2Mat2.m"}
+\lstinputlisting[caption={CalculatePCAMat.m}]{"../Executable Script/Exp 9/CalculatePCAMat2.m"}
+\lstinputlisting[caption={SplitDataSet.m}]{"../Executable Script/Exp 9/SplitDataSet2.m"}
+\lstinputlisting[caption={TestClassifierPerformance.m}]{"../Executable Script/Exp 9/TestClassifierPerformence2.m"}
 \lstinputlisting[caption={PrincipalComponentAnalysis.m}]{"../Function Library/PrincipalComponentAnalysis.m"}
 \subsection{实验结果和分析}
+\begin{tabular}{l|rrrr}
+	\toprule
+	 & 森林 & 商业区 & 海滩 & 沙漠 \\
+	 \midrule
+	 森林 & 91.93\% & 7.60\% & 0.33\% & 0.13\% \\
+	 商业区 & 12.00\% & 84.80\% & 2.73\% & 0.47\% \\
+	 海滩 & 1.07\% & 1.07\% & 96.40\% & 1.47\% \\
+	 沙漠 & 0.07\% & 1.07\% & 0.13\% & 98.73\% \\
+	 \bottomrule
+\end{tabular}
