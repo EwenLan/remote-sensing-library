@@ -24,6 +24,6 @@ function newimg = FusionDifferDetection(img1, img2)
     mu_b = ImageMeanFilter(mu_b_img, 2);
     Xd = log(mu_a + 1) - log(mu_b + 1);
     Xd = Xd/(max(max(Xd)) - min(min(Xd)));
-    classifiedImg = FuzzyClustering(Xd, 2);
+    classifiedImg = FuzzyClustering(Xd, 4);
     newimg = classifiedImg;
 end

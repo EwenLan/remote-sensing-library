@@ -17,7 +17,10 @@ function classificationMat = FuzzyClustering(img, centerNum)
     imgVectorRows = imgsize(1)*imgsize(2);
     centerVector = randn(centerNum, dims);
     imgVector = reshape(img, imgVectorRows, dims);
-    Umat = abs(randn(centerNum, imgVectorRows));
+    Umat = zeros(imgVectorRows, centerNum);
+    for i = 1:70
+        fprintf(' ');
+    end
     for i = 1:maxTrainingTimes
         distanceMat = zeros(imgVectorRows, centerNum);
         for j = 1:centerNum
@@ -27,12 +30,14 @@ function classificationMat = FuzzyClustering(img, centerNum)
 %         Umat = distanceMat./sum((distanceMat).^(-1/(m - 1)), 1);
         for j = 1:centerNum
             for k = 1:imgVectorRows
-                sumVal = sum((distanceMat(k, j)./distanceMat(:, j)).^(-1/(m - 1)));
-                Umat(j, k) = sumVal;
+%                 sumVal = sum((distanceMat(k, j)./distanceMat(k, :)).^(-1/(m - 1)));
+%                 Umat(j, k) = sumVal;
+                Umat(k, j) = 1/(sum((distanceMat(k, j)./distanceMat(k, :)).^(2/(m - 1))));
             end
         end
-        deltaCenterVector = (Umat'.^m.*imgVector)./(sum(Umat, 1))';
+        deltaCenterVector = (Umat.^m.*imgVector)./(sum(Umat, 2));
         centerVector = deltaCenterVector;
+        ProgressBar(i/maxTrainingTimes);
     end
     [~, minInd] = min(distanceMat, [], 2);
     classificationMat = reshape(minInd - 1, imgsize(1), imgsize(2));
