@@ -2,7 +2,6 @@ function newimg = FusionDifferDetection(img1, img2)
     img1size = size(img1);
     img2size = size(img2);
     channels = length(img1size);
-    newimg = zeros(img1size, 'double');
     if channels > 2
         error('Images have multi-channels.');
     end
@@ -24,6 +23,5 @@ function newimg = FusionDifferDetection(img1, img2)
     mu_b = ImageMeanFilter(mu_b_img, 2);
     Xd = log(mu_a + 1) - log(mu_b + 1);
     Xd = Xd/(max(max(Xd)) - min(min(Xd)));
-    classifiedImg = FuzzyClustering(Xd, 4);
-    newimg = classifiedImg;
+    newimg = Xd;
 end

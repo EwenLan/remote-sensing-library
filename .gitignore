@@ -2,7 +2,7 @@
 *.log
 *.gz
 *.toc
-*.pdf
+/Document/*.pdf
 *.asv
 *.out
 *.exe
